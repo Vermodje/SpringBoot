@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>Edit User</h1>
+<form th:action="@{/admin/update(id=${user.id})}" method="post" th:object="${user}">
+    <table border="0" cellpadding="5">
+        <tr>
+            <td>ID:</td>
+            <td><p th:text="${user.id}"></p></td>
+        </tr>
+        <tr>
+            <td>Login:</td>
+            <td><input type="text" name="login" th:value="${user.login}"/></td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td><input type="text" name="name" th:value="${user.name}"/></td>
+        </tr>
+        <tr>
+            <td>Email:</td>
+            <td><input type="text" name="email" th:value="${user.email}"/></td>
+        </tr>
+        <tr>
+            <td>Password:</td>
+            <td><input type="text" name="password" th:value="${user.password}"/></td>
+        </tr>
+        <tr>
+            <td>User role:</td>
+            <td><label><select name="roles">
+                <option value="ROLE_USER">ROLE_USER</option>
+                <option value="ROLE_ADMIN">ROLE_ADMIN</option>
+            </select></label></td>
+        </tr>
+        <tr>
+            <td colspan="2"><input type="submit" value="Edit"></td>
+        </tr>
+    </table>
+</form>
+<p th:text="${message}" style="color: red;"></p>
+</body>
+</html>
