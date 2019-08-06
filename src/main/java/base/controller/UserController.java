@@ -1,14 +1,17 @@
 package base.controller;
 
+
+import base.model.Role;
 import base.model.User;
 import base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.AuthorityUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
 public class UserController {
@@ -29,13 +32,20 @@ public class UserController {
         }
         return mv;
     }
-    @RequestMapping("/login")
-    public ModelAndView login(@RequestParam(value = "error", required = false) String error) {
-        ModelAndView mv = new ModelAndView("login");
+
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
-            mv.addObject("error", "Your login or password is incorrect. Please try again");
+            model.addAttribute("error", "Your login or password is incorrect. Please try again");
         }
-        return mv;
+        if (AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext().getAuthentication().getAuthorities()).contains("ROLE_ADMIN")) {
+            return "redirect:/admin";
+
+        } else if (AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext().getAuthentication().getAuthorities()).contains("ROLE_USER")) {
+            return "redirect:/home";
+        } else {
+            return "login";
+        }
     }
 
     @RequestMapping("/home")
