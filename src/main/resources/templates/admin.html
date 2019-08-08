@@ -90,27 +90,51 @@
                                             <td th:text="${user.name}" class="align-middle"></td>
                                             <td th:text="${user.email}" class="align-middle"></td>
                                             <td>
-                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" >Edit</button>
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" th:attrappend="data-target=${user}">
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"  th:attrappend="data-target=${user.id}">Edit</button>
+                                                <div class="modal fade" id="exampleModal"  role="dialog"  aria-hidden="true" th:attrappend="id=${user.id}">
                                                     <div class="modal-dialog" role="document">
                                                         <div class="modal-content">
                                                             <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel" th:text="${user.id + '!' }"></h5>
+                                                                <h5 class="modal-title" id="exampleModalLabel" th:text="${'Edit user' + user.login}"></h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form th:action="@{/admin/update(id=${user.id})}" method="post" th:object="${user}">
+                                                                <form th:action="@{/admin/update(id=${user.id})}" method="post" th:object="${user}" >
                                                                     <div class="form-group">
-                                                                        <label for="user-id" class="col-form-label">ID:</label>
-                                                                        <input type="text" class="form-control" id="user-id" th:value="${user.id}">
+                                                                        <label for="user-id" class="col-form-label d-flex justify-content-center">ID:</label>
+                                                                        <input type="text" class="form-control" id="user-id" th:value="${user.id}" name="id">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="user-email" class="col-form-label d-flex justify-content-center">Email:</label>
+                                                                        <input type="text" class="form-control" id="user-email" th:value="${user.email}" name="email">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="user-login" class="col-form-label d-flex justify-content-center">Login:</label>
+                                                                        <input type="text" class="form-control" id="user-login" th:value="${user.login}" name="login">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="user-name" class="col-form-label d-flex justify-content-center">Name:</label>
+                                                                        <input type="text" class="form-control" id="user-name" th:value="${user.name}" name="name">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="user-password" class="col-form-label d-flex justify-content-center">Password:</label>
+                                                                        <input type="text" class="form-control" id="user-password" th:value="${user.password}" name="password">
+                                                                    </div>
+                                                                   <!-- <div class="form-group">
+                                                                        <label for="user-role" class="col-form-label d-flex justify-content-center">Role:</label>
+                                                                        <input type="text" class="form-control" id="user-role" th:value="${user.roles[0].getAuthority()}" name="roles">
+                                                                    </div>!-->
+                                                                    <div class="form-group" th:each="role:${user.roles}">
+                                                                        <label for="user-role" class="col-form-label d-flex justify-content-center" th:attrappend="for=${role.id}">Role:</label>
+                                                                        <input type="text" class="form-control" id="user-role" th:value="${role.role}" name="roles" th:attrappend="id=${role.id}">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                        <button type="submit" class="btn btn-primary text-light" name="submit">Edit user</button>
                                                                     </div>
                                                                 </form>
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-primary">Send message</button>
                                                             </div>
                                                         </div>
                                                     </div>

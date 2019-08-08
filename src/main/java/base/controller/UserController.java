@@ -66,7 +66,7 @@ public class UserController {
         return "redirect:/admin";
     }
 
-    @RequestMapping("/admin/edit")
+   /* @RequestMapping("/admin/edit")
     public ModelAndView editUser(@RequestParam long id, @RequestParam(value = "message", required = false) String message, Model model) {
         ModelAndView mv = new ModelAndView("edit");
         if (message != null) {
@@ -79,7 +79,7 @@ public class UserController {
         }
 
         return mv;
-    }
+    }*/
 
     @RequestMapping("/admin/delete")
     public String deleteUser(@RequestParam long id, Model model) {
@@ -98,7 +98,7 @@ public class UserController {
         } catch (Exception e) {
             model.addAttribute("id", id);
             model.addAttribute("message", new String());
-            return "redirect:/admin/edit";
+            return "redirect:/login";
         }
         return "redirect:/admin";
     }
