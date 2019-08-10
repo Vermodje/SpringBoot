@@ -22,7 +22,7 @@ public class UserController {
     private UserService service;
 
     @RequestMapping("/admin")
-    public ModelAndView admin(Model model/*, @RequestParam(value = "message", required = false) String message*/) {
+    public ModelAndView admin(Model model) {
         ModelAndView mv = new ModelAndView("admin");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String currentUserLogin = ((UserDetails) principal).getUsername();
