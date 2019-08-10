@@ -22,7 +22,7 @@ public class UserController {
     private UserService service;
 
     @RequestMapping("/admin")
-    public ModelAndView admin(Model model) {
+    public ModelAndView admin(Model model/*, @RequestParam(value = "message", required = false) String message*/) {
         ModelAndView mv = new ModelAndView("admin");
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String currentUserLogin = ((UserDetails) principal).getUsername();
@@ -91,7 +91,6 @@ public class UserController {
 
     @RequestMapping("/admin/update")
     public String updateUser(@ModelAttribute("user") User user, Model model, @RequestParam long id) {
-
         try {
             service.updateUser(user);
         } catch (UserException e) {

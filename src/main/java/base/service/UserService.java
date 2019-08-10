@@ -2,6 +2,7 @@ package base.service;
 
 import base.exception.UserException;
 import base.model.User;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
