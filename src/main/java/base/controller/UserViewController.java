@@ -16,7 +16,6 @@ public class UserViewController {
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String viewAdminPage() {
-
         return "admin";
     }
 
@@ -27,14 +26,13 @@ public class UserViewController {
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String viewLoginPage() {
-       /* if (AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext().getAuthentication().getAuthorities()).contains("ROLE_ADMIN")) {
+        if (AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext().getAuthentication().getAuthorities()).contains("ROLE_ADMIN")) {
             return "redirect:/admin";
 
         } else if (AuthorityUtils.authorityListToSet(SecurityContextHolder.getContext().getAuthentication().getAuthorities()).contains("ROLE_USER")) {
             return "redirect:/home";
         } else {
             return "login";
-        }*/
-       return "login";
+        }
     }
 }
