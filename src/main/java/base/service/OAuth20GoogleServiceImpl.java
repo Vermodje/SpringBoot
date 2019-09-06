@@ -19,7 +19,7 @@ public class OAuth20GoogleServiceImpl implements OAuth20GoogleService {
     private OAuth20Service service;
     private final String API_KEY = "765433196356-9huilh6mtmtavb3dhqmf3h1937gpm7dd.apps.googleusercontent.com";
     private final String API_SECRET = "Y0lufJDcJeVU7FQSiwCkg98S";
-    private final String SCOPE = "https://www.googleapis.com/auth/userinfo.profile";
+    private final String SCOPE = "profile email";
     private final String CALLBACK = "http://localhost:8081/callback";
 
 

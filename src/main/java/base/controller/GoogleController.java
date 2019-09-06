@@ -38,6 +38,7 @@ public class GoogleController {
             oAuth20Service.signRequest(token, request);
             Response response = googleService.getResponse(oAuth20Service, request);
             String json = response.getBody();
+            System.out.println(json);
             Map<String, String> mapFromJSON = googleService.convertJSONtoMap(json);
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(mapFromJSON.get("name"), "", Collections.singleton(roleService.getRoleById((long) 2))));
         }catch (Exception e){
