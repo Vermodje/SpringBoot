@@ -7,12 +7,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.security.Principal;
 import java.util.Optional;
 
 @Controller
 public class UserViewController {
-
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String viewAdminPage() {
@@ -20,8 +21,11 @@ public class UserViewController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String viewUserPage() {
-        return "home";
+    public ModelAndView viewUserPage() {
+        ModelAndView mv = new ModelAndView("home");
+        Principal principal = SecurityContextHolder.getContext().getAuthentication();
+        mv.addObject("user", principal.getName());
+        return mv;
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
