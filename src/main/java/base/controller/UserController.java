@@ -24,11 +24,11 @@ public class UserController {
     @RequestMapping("/admin")
     public ModelAndView admin(Model model) {
         ModelAndView mv = new ModelAndView("admin");
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserLogin = ((UserDetails) principal).getUsername();
+//        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//        String currentUserLogin = ((UserDetails) principal).getUsername();
         mv.addObject("users", service.getAllUsers());
         model.addAttribute("user", new User());
-        mv.addObject("currentUser", currentUserLogin);
+       // mv.addObject("currentUser", currentUserLogin);
         return mv;
 
     }
