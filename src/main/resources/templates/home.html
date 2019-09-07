@@ -2,9 +2,70 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
-<h1>Welcome <span th:text="${user}"></span></h1>
+<div class="container-fluid homePage d-flex flex-column m-0 p-0" style="height: 100vh;">
+<header>
+    <div class="container-fluid bg-dark">
+        <div class="row w-100 d-flex justify-content-between m-0 p-0">
+            <div class="project-name">
+                <h5 class="text-muted mt-1">Project name</h5>
+            </div>
+            <div class="logout">
+                <form action="/logout" method="post">
+                    <div>
+                        <!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />!-->
+                        <button type="submit" class="btn text-muted" name="logout">Logout</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container-fluid m-0 p-0">
+    <div class="row w-100">
+        <div class="col-sm-2 m-0 pl-2">
+            <div class="nav flex-column nav-pills  w-100 mt-5" id="v-pills-tab" role="tablist"
+                 aria-orientation="vertical">
+                <a class="nav-link disabled" id="v-pills-admin-tab" data-toggle="pill" href="#v-pills-admin"
+                   role="tab" aria-controls="v-pills-admin" aria-selected="true">Admin</a>
+                <a class="nav-link active" id="v-pills-user-tab" data-toggle="pill" href="#v-pills-user" role="tab"
+                   aria-controls="v-pills-user" aria-selected="false">User</a>
+            </div>
+        </div>
+        <div class="col-sm-10 w-100 m-0 p-0 flex-column" style="background: rgb(240,240,240);
+            background: linear-gradient(90deg, rgba(240,240,240,1) 0%, rgba(255,255,255,1) 100%);">
+            <div class="tab-content p-5" id="v-pills-tabContent" style="flex-grow: 1;">
+                <div class="tab-pane fade show active " id="v-pills-user" role="tabpanel"
+                     aria-labelledby="v-pills-user-tab">
+                    <div class=" row flex-column">
+                        <h2 class="mb-5 mt-5">Welcome <span th:text="${user}"></span></h2>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+</div>
+<script
+        src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
+</script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+</script>
 </body>
 </html>
