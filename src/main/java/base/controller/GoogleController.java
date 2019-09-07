@@ -21,27 +21,18 @@ public class GoogleController {
     @Autowired
     private OAuth20GoogleService googleService;
 
-    @Autowired
-    private RoleService roleService;
 
     @RequestMapping(value = "/login-google", method = RequestMethod.GET)
-    public String login() {
+    public String loginInGoogle() {
         OAuth20Service oAuth20Service = googleService.getService();
         return "redirect:" + googleService.getAuth(oAuth20Service);
     }
+
     @GetMapping(value = "/callback")
-    public String google(@RequestParam String code, HttpServletResponse servletResponse){
+    public String callback(@RequestParam String code, HttpServletResponse servletResponse) {
         try {
-            OAuth20Service oAuth20Service = googleService.getService();
-            OAuth2AccessToken token = googleService.getToken(code, oAuth20Service);
-            OAuthRequest request = new OAuthRequest(Verb.GET, "https://www.googleapis.com/oauth2/v1/userinfo?alt=json");
-            oAuth20Service.signRequest(token, request);
-            Response response = googleService.getResponse(oAuth20Service, request);
-            String json = response.getBody();
-            System.out.println(json);
-            Map<String, String> mapFromJSON = googleService.convertJSONtoMap(json);
-            SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(mapFromJSON.get("name"), "", Collections.singleton(roleService.getRoleById((long) 2))));
-        }catch (Exception e){
+            googleService.setAuthentication(code);
+        } catch (Exception e) {
             servletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
         }
         return "redirect:/login";
