@@ -17,15 +17,17 @@ $(document).ready(function () {
                 type: "GET",
                 success: function (data) {
                     $.each(data, function (i, user) {
+                        var k = user.roles.length;
                         $userTable.append(
-                            "<tr><td>" + user.id + "</td>" +
-                            "<td>" + user.roles[0].role + "</td>" +
-                            "<td>" + user.login + "</td>" +
-                            "<td>" + user.password + "</td>" +
-                            "<td>" + user.name + "</td>" +
-                            "<td>" + user.email + "</td>" +
-                            "<td><button type=\"button\" class=\"btn btn-primary btn-edit\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
-                            "<td><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
+                            "<tr><td class=\"userRow" + (i+1) + "\"  rowspan=\"" + k + " \" scope=\"col\">" + user.id + "</td>" +
+                            "<td scope=\"col\">" + user.roles[k-1].id + "</td>" +
+                            "<td scope=\"col\">" + user.roles[k-1].role + "</td>>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.login + "</td>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.password + "</td>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.name + "</td>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.email + "</td>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\"><button type=\"button\" class=\"btn btn-primary btn-edit\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
+                            "<td rowspan=\"" + k + " \" scope=\"col\"><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
                         );
                         $userTableRow = $userTable.find("tr:nth-child(" + (i + 1) + ")");
                         $btnDelete = $userTableRow.find("td:has(button.btn-delete)").children();
@@ -63,18 +65,39 @@ $(document).ready(function () {
                         });
 
                     });
+
                 }
 
             }
         );
         $btnInsert.on('click', function () {
-            let $roleId;
-            let $role = $('#exampleInputRole1').val();
-            if ($role == 'ROLE_ADMIN') {
-                $roleId = 1;
-            } else {
-                $roleId = 2;
-                $role = "ROLE_USER"
+            let $selectedRoles = [];
+            let $rolesIndexes = [];
+            let $rolesName = [];
+            $('input[id^="roleCheck"]').each(function () {
+                if( $(this).is(":checked")) {
+                    $(this).prop('checked',true);
+                    $selectedRoles.push($(this).prop('checked'));
+                }
+                else {
+                    $selectedRoles.push($(this).prop('checked'))
+                }
+            })
+            for(var i = 0; i < $selectedRoles.length; i++){
+                if($selectedRoles[i] === true){
+                    $rolesIndexes.push(i + 1);
+                }
+            }
+            for(var i = 0; i < $rolesIndexes.length; i++){
+                $rolesName.push($("#roleCheck" + $rolesIndexes[i]).val());
+            }
+            let $numberOfUserRoles = $rolesName.length;
+            let $roles = [];
+            for(var i = 0; i < $numberOfUserRoles; i++){
+                $roles.push( {
+                    "id": $rolesIndexes[i],
+                    "role": $rolesName[i]
+                });
             }
             $.ajax({
                 url: "http://localhost:8081/admin/insert",
@@ -84,10 +107,7 @@ $(document).ready(function () {
                     name: $('#exampleInputName1').val(),
                     login: $('#exampleInputLogin1').val(),
                     password: $('#exampleInputPassword1').val(),
-                    roles: [{
-                        id: $roleId,
-                        role: $role
-                    }]
+                    roles: $roles
                 }),
                 contentType: 'application/json',
                 success: function () {
