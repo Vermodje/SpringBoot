@@ -10,7 +10,6 @@ $(document).ready(function () {
         var $userLogin = $("#user-login");
         var $userName = $("#user-name");
         var $userPassword = $("#user-password");
-        var $userRole = $("#user-role");
         var $btnUpdate = $("#updateBtn");
         $.ajax({
                 url: "http://localhost:8081/admin/",
@@ -19,15 +18,15 @@ $(document).ready(function () {
                     $.each(data, function (i, user) {
                         var k = user.roles.length;
                         $userTable.append(
-                            "<tr><td class=\"userRow" + (i+1) + "\"  rowspan=\"" + k + " \" scope=\"col\">" + user.id + "</td>" +
-                            "<td scope=\"col\">" + user.roles[k-1].id + "</td>" +
-                            "<td scope=\"col\">" + user.roles[k-1].role + "</td>>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.login + "</td>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.password + "</td>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.name + "</td>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\">" + user.email + "</td>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\"><button type=\"button\" class=\"btn btn-primary btn-edit\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
-                            "<td rowspan=\"" + k + " \" scope=\"col\"><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
+                            "<tr><td class=\"userRow" + (i+1) + "\">" + user.id + "</td>" +
+                            "<td >" + user.roles[k-1].id + "</td>" +
+                            "<td>" + user.roles[k-1].role + "</td>>" +
+                            "<td>" + user.login + "</td>" +
+                            "<td >" + user.password + "</td>" +
+                            "<td >" + user.name + "</td>" +
+                            "<td >" + user.email + "</td>" +
+                            "<td ><button type=\"button\" class=\"btn btn-primary btn-edit\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
+                            "<td ><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
                         );
                         $userTableRow = $userTable.find("tr:nth-child(" + (i + 1) + ")");
                         $btnDelete = $userTableRow.find("td:has(button.btn-delete)").children();
@@ -46,7 +45,10 @@ $(document).ready(function () {
                                     $userLogin.attr("value", userForEdit.login);
                                     $userName.attr("value", userForEdit.name);
                                     $userPassword.attr("value", userForEdit.password);
-                                    $userRole.attr("value", userForEdit.roles[0].role);
+                                    for(var i = 0; i < userForEdit.roles.length; i++){
+                                        $("#user-role-" + userForEdit.roles[i].id).prop('checked', true);
+                                    }
+
                                 }
                             });
                         });
@@ -71,34 +73,7 @@ $(document).ready(function () {
             }
         );
         $btnInsert.on('click', function () {
-            let $selectedRoles = [];
-            let $rolesIndexes = [];
-            let $rolesName = [];
-            $('input[id^="roleCheck"]').each(function () {
-                if( $(this).is(":checked")) {
-                    $(this).prop('checked',true);
-                    $selectedRoles.push($(this).prop('checked'));
-                }
-                else {
-                    $selectedRoles.push($(this).prop('checked'))
-                }
-            })
-            for(var i = 0; i < $selectedRoles.length; i++){
-                if($selectedRoles[i] === true){
-                    $rolesIndexes.push(i + 1);
-                }
-            }
-            for(var i = 0; i < $rolesIndexes.length; i++){
-                $rolesName.push($("#roleCheck" + $rolesIndexes[i]).val());
-            }
-            let $numberOfUserRoles = $rolesName.length;
-            let $roles = [];
-            for(var i = 0; i < $numberOfUserRoles; i++){
-                $roles.push( {
-                    "id": $rolesIndexes[i],
-                    "role": $rolesName[i]
-                });
-            }
+            let $roles = checkRoles('input[id^="roleCheck"]');
             $.ajax({
                 url: "http://localhost:8081/admin/insert",
                 type: "POST",
@@ -119,14 +94,7 @@ $(document).ready(function () {
             });
         });
         $btnUpdate.on('click', function () {
-            let $roleId;
-            let $role = $userRole.val();
-            if ($role == "ROLE_ADMIN") {
-                $roleId = 1;
-            } else {
-                $roleId = 2;
-                $role = "ROLE_USER";
-            }
+          let $roles = checkRoles('input[id^="user-role-"]');
             $.ajax({
                 url: "http://localhost:8081/admin/update?id=" + $userId.val(),
                 type: "PUT",
@@ -137,12 +105,7 @@ $(document).ready(function () {
                     name: $userName.val(),
                     login: $userLogin.val(),
                     password: $userPassword.val(),
-                    roles: [
-                        {
-                            id: $roleId,
-                            role: $role
-                        }
-                    ]
+                    roles: $roles
                 }),
                 success: function (data) {
                     location.reload();
@@ -152,5 +115,28 @@ $(document).ready(function () {
                 }
             });
         });
+        function checkRoles(input) {
+            let $selectedRoles = [];
+            /*$('input[id^="roleCheck"]').each(function () {*/
+            $(input).each(function () {
+                if( $(this).is(":checked")) {
+                    $(this).prop('checked',true);
+                    $selectedRoles.push($(this).prop('checked'));
+                }
+                else {
+                    $selectedRoles.push($(this).prop('checked'))
+                }
+            });
+            let $roles = [];
+            for(var i = 0; i < $selectedRoles.length; i++){
+                if($selectedRoles[i] === true){
+                    $roles.push({
+                        "id": i + 1,
+                        "role": $('#roleCheck' + (i+1)).val()
+                    });
+                }
+            }
+            return $roles;
+        }
     }
 );

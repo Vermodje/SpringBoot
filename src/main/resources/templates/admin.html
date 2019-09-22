@@ -75,7 +75,6 @@
                                             <thead>
                                             <tr>
                                                 <th scope="col">ID</th>
-                                                <!--<th scope="col">Role</th>!-->
                                                 <th scope="col">RoleID</th>
                                                 <th scope="col">RoleName</th>
                                                 <th scope="col">Login</th>
@@ -139,11 +138,21 @@
                                                                    id="user-password"
                                                                    name="password">
                                                         </div>
-                                                        <div class="form-group">
-                                                            <label for="user-role"
-                                                                   class="col-form-label d-flex justify-content-center">Role:</label>
-                                                            <input type="text" class="form-control"
-                                                                   id="user-role" name="roles">
+                                                        <div class="form-group d-flex flex-column">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       value="ROLE_ADMIN" id="user-role-1">
+                                                                <label class="form-check-label" for="user-role-1">
+                                                                    ROLE_ADMIN
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       value="ROLE_USER" id="user-role-2">
+                                                                <label class="form-check-label" for="user-role-2">
+                                                                    ROLE_USER
+                                                                </label>
+                                                            </div>
                                                         </div>
                                                         <div class="form-group">
                                                             <span id="update-error-msg" class="text-danger d-flex justify-content-center "></span>
@@ -200,25 +209,19 @@
                                                            id="exampleInputPassword1" placeholder="Password"
                                                            name="password">
                                                 </div>
-                                                <!--<div class="form-group w-100 d-flex flex-column">
-                                                    <label for="exampleInputRole1"
-                                                           class="font-weight-bold d-flex justify-content-center">Role</label>
-                                                    <input type="text" class="form-control" id="exampleInputRole1"
-                                                           placeholder="Role" name="roles">
-                                                </div>!-->
                                                 <div class="form-group w-100 d-flex flex-column">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="ROLE_ADMIN"  id="roleCheck1" >
-                                                    <label class="form-check-label" for="roleCheck1">
-                                                        ROLE_ADMIN
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="ROLE_USER"  id="roleCheck2" >
-                                                    <label class="form-check-label" for="roleCheck2">
-                                                        ROLE_USER
-                                                    </label>
-                                                </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="ROLE_ADMIN"  id="roleCheck1" >
+                                                        <label class="form-check-label" for="roleCheck1">
+                                                            ROLE_ADMIN
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="checkbox" value="ROLE_USER"  id="roleCheck2" >
+                                                        <label class="form-check-label" for="roleCheck2">
+                                                            ROLE_USER
+                                                        </label>
+                                                    </div>
                                                 </div>
                                                 <div class="form-group w-100 d-flex flex-column">
                                                     <span id="insert-error-msg" class="text-danger d-flex justify-content-center "></span>
