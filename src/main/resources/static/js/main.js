@@ -18,16 +18,23 @@ $(document).ready(function () {
                     $.each(data, function (i, user) {
                         var k = user.roles.length;
                         $userTable.append(
-                            "<tr><td class=\"userRow" + (i+1) + "\">" + user.id + "</td>" +
-                            "<td >" + user.roles[k-1].id + "</td>" +
-                            "<td>" + user.roles[k-1].role + "</td>>" +
-                            "<td>" + user.login + "</td>" +
-                            "<td >" + user.password + "</td>" +
-                            "<td >" + user.name + "</td>" +
-                            "<td >" + user.email + "</td>" +
-                            "<td ><button type=\"button\" class=\"btn btn-primary btn-edit\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
-                            "<td ><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
+                            "<tr><td class=\"text-center align-middle\" rowspan='" + k +"'>" + user.id + "</td>" +
+                            "<td class=\"text-center align-middle\">" + user.roles[0].id + "</td>" +
+                            "<td class=\"text-center align-middle\">" + user.roles[0].role + "</td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'>" + user.login + "</td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'>" + user.password + "</td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'>" + user.name + "</td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'>" + user.email + "</td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'><button type=\"button\" class=\"btn btn-primary btn-edit mr-2\" data-toggle=\"modal\" data-target=\"#exampleModal\">" + "Edit" + "</button></td>" +
+                            "<td class=\"text-center align-middle\" rowspan='" + k +"'><button type=\"button\" class=\"btn btn-primary btn-delete\">" + "Delete" + "</button></td></tr>"
                         );
+                        while (k > 1){
+                            $userTable.append(
+                                "<tr><td class=\"text-center align-middle\">" + user.roles[k-1].id + "</td>" +
+                                "<td class=\"text-center align-middle\">" + user.roles[k-1].role + "</td></tr>"
+                            );
+                            k--;
+                        }
                         $userTableRow = $userTable.find("tr:nth-child(" + (i + 1) + ")");
                         $btnDelete = $userTableRow.find("td:has(button.btn-delete)").children();
                         $btnEdit = $userTableRow.find("td:has(button.btn-edit)").children();
