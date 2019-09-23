@@ -124,7 +124,6 @@ $(document).ready(function () {
         });
         function checkRoles(input) {
             let $selectedRoles = [];
-            /*$('input[id^="roleCheck"]').each(function () {*/
             $(input).each(function () {
                 if( $(this).is(":checked")) {
                     $(this).prop('checked',true);

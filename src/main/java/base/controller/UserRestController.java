@@ -1,11 +1,14 @@
 package base.controller;
 
 import base.exception.UserException;
+import base.model.Comment;
 import base.model.User;
+import base.service.CommentService;
 import base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,8 +19,11 @@ public class UserRestController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private CommentService commentService;
+
     @RequestMapping(value = "/admin/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers()  {
+    public ResponseEntity<List<User>> getAllUsers(Authentication authentication)  {
         List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
@@ -83,4 +89,22 @@ public class UserRestController {
         }
         return new ResponseEntity<User>(currentUser, HttpStatus.OK);
     }
+    @RequestMapping(value = "/home/", method = RequestMethod.GET)
+    public ResponseEntity<User> getCurrentUser (Authentication authentication){
+        User user = null;
+        user = userService.getUserByLogin(authentication.getName());
+        return new ResponseEntity<User>(user, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/home/news/insert", method = RequestMethod.POST)
+    public ResponseEntity<Void> createComment(@RequestBody Comment comment){
+        try {
+            commentService.add(comment);
+        } catch (UserException e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+
 }

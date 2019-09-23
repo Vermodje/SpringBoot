@@ -4,6 +4,11 @@ import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 
+
+/* INSERT INTO db_example.roles (id, role) values(1, 'ROLE_ADMIN');
+INSERT INTO db_example.roles (id, role) values(2, 'ROLE_USER'); */
+
+
 @Entity
 @Table(name = "roles")
 public class Role implements GrantedAuthority {

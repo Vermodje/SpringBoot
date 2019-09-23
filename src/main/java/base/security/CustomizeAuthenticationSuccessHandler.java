@@ -1,5 +1,6 @@
 package base.security;
 
+import base.model.User;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
@@ -17,7 +18,8 @@ public class CustomizeAuthenticationSuccessHandler implements AuthenticationSucc
         if (AuthorityUtils.authorityListToSet(authentication.getAuthorities()).contains("ROLE_ADMIN")) {
             httpServletResponse.sendRedirect("/admin");
         } else {
-            httpServletResponse.sendRedirect("/home");
+
+            httpServletResponse.sendRedirect("/home/news");
         }
     }
 }
