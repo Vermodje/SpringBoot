@@ -12,10 +12,6 @@ public class Comment {
     @Column(name = "text")
     private String text;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(name = "user_comments", joinColumns = {@JoinColumn(name = "comment_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")})
-    private User user;
-
     public Comment() {
 
     }
@@ -36,11 +32,4 @@ public class Comment {
         this.text = text;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

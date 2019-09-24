@@ -2,8 +2,10 @@ package base.controller;
 
 import base.exception.UserException;
 import base.model.Comment;
+import base.model.News;
 import base.model.User;
 import base.service.CommentService;
+import base.service.NewsService;
 import base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +23,9 @@ public class UserRestController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private NewsService newsService;
 
     @RequestMapping(value = "/admin/", method = RequestMethod.GET)
     public ResponseEntity<List<User>> getAllUsers(Authentication authentication)  {
@@ -96,7 +101,31 @@ public class UserRestController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/home/news/", method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> getAllNewsComments(){
+        List<Comment> comments = commentService.getAllComments();
+        if(comments.isEmpty()){
+            return new ResponseEntity<List<Comment>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+    }
+
+
     @RequestMapping(value = "/home/news/insert", method = RequestMethod.POST)
+    public ResponseEntity<Void> addComment(@RequestBody Comment comment) throws UserException {
+        News news = newsService.getNewsById(Long.valueOf(1));
+        try {
+            commentService.add(comment);
+            List<Comment> comments = commentService.getAllComments();
+            news.setComments(comments);
+            newsService.updateNews(news);
+        } catch (UserException e) {
+            e.printStackTrace();
+            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    }
+    /*@RequestMapping(value = "/home/news/insert", method = RequestMethod.POST)
     public ResponseEntity<Void> createComment(@RequestBody Comment comment){
         try {
             commentService.add(comment);
@@ -105,6 +134,6 @@ public class UserRestController {
             return new ResponseEntity<Void>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<Void>(HttpStatus.CREATED);
-    }
+    }*/
 
 }

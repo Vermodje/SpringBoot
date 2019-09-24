@@ -9,9 +9,9 @@ import java.util.List;
 public interface CommentService {
     void add(Comment comment) throws UserException;
 
-    /*List getAllUsers();
+    List getAllComments();
 
-    User getUserById(Long id) throws UserException;
+    /*User getUserById(Long id) throws UserException;
 
     void deleteUser(Long id) throws UserException;
 

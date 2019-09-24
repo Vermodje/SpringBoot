@@ -1,7 +1,10 @@
 package base.controller;
 
+import base.exception.UserException;
+import base.model.News;
 import base.model.Role;
 import base.model.User;
+import base.service.NewsService;
 import base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -20,17 +23,25 @@ public class UserViewController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private NewsService newsService;
+
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public String viewAdminPage() {
         return "admin";
     }
 
     @RequestMapping(value = "/home/news", method = RequestMethod.GET)
-    public ModelAndView viewUserPage() {
+    public ModelAndView viewNewsPage() {
         ModelAndView mv = new ModelAndView("home");
-        Principal principal = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.getUserByLogin(principal.getName());
-        mv.addObject("user", user.getName());
+        News news = null;
+        try {
+            news = newsService.getNewsById(Long.valueOf(1));
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+        mv.addObject("headline", news.getHeadline());
+        mv.addObject("description", news.getDescription());
         //mv.addObject("user_id", user.getId());
         return mv;
     }

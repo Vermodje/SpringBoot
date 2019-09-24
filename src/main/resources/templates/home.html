@@ -44,21 +44,40 @@
                 <div class="tab-pane fade show active " id="v-pills-user" role="tabpanel"
                      aria-labelledby="v-pills-user-tab">
                     <div class=" row flex-column">
-                        <h2 class="mb-5 mt-5">Welcome <span th:text="${user}"></span></h2>
+                        <h2 class="mb-5 mt-5">Welcome <span></span></h2>
                         <div class="container">
                             <div class="row w-100 ">
                                 <div class=" d-flex flex-column w-100">
                                     <img src="http://www.ifes-ras.ru/images/stories/pics/news.png" class="card-img-top img img-fluid  mx-auto news-img ">
                                     <div class="card-body w-100 mx-auto p-5">
-                                        <h5 class="card-title text-center">Название новости</h5>
-                                        <p class="card-text text-center " style=" word-wrap: break-word;">41zo0hzpfbjmbge22ex4ciydpe3090yleb5bzwe62elrza9r41lovnd4my6fvyjwnfxoet67mvu1rcq4jjmsmtq4eeelaw0x15rsmh6nrvq7z002s23t5c219jfsb8lsnds81effom1ctwcsf4swhy5kjdthx1xa83yafrs6zkji4gmrkm9zlhql8z4k84tnm2r47ta53c4o9aqrjs64e02jv3hahb5q73ekpid7j79ua8zuk5chfv5mun6xzhp</p>
+                                        <h5 class="card-title text-center" th:text="${headline}"></h5>
+                                        <p class="card-text text-center " style=" word-wrap: break-word;"  th:text="${description}"></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="container p-5">
-                            <h2 class="text-center">Комментарии</h2>
-                            <div class="m-5">
+                            <h2 class="text-center" id="user_comments">Комментарии</h2>
+                            <!--<div class="m-5">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid mb-2">
+                                            <p class="text-secondary text-center">15 Minutes Ago</p>
+                                        </div>
+                                        <div class="col-md-10">
+                                            <p>
+                                                <strong>Maniruzzaman Akash</strong>
+                                            </p>
+                                            <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+                                            <p>
+                                                <a class="float-right btn text-white btn-danger"> <i class="fas fa-exclamation-triangle"></i> Пожаловаться</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>!-->
+                           <!-- <div class="m-5">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-md-2">
@@ -69,7 +88,6 @@
                                             <p>
                                                 <strong>Maniruzzaman Akash</strong>
                                             </p>
-                                            <div class="clearfix"></div>
                                             <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                                             <p>
                                                 <a class="float-right btn text-white btn-danger"> <i class="fas fa-exclamation-triangle"></i> Пожаловаться</a>
@@ -77,27 +95,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="m-5">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <img src="https://image.ibb.co/jw55Ex/def_face.jpg" class="img img-rounded img-fluid mb-2"/>
-                                            <p class="text-secondary text-center">15 Minutes Ago</p>
-                                        </div>
-                                        <div class="col-md-10">
-                                            <p>
-                                                <strong>Maniruzzaman Akash</strong>
-                                            </p>
-                                            <div class="clearfix"></div>
-                                            <p>Lorem Ipsum is simply dummy text of the pr make  but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
-                                            <p>
-                                                <a class="float-right btn text-white btn-danger"> <i class="fas fa-exclamation-triangle"></i> Пожаловаться</a>
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            </div>!-->
                             <h2 class="text-center">Оставить комментарий</h2>
                             <div class="m-5">
                                 <div class="card-body">
