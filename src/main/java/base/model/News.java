@@ -1,6 +1,7 @@
 package base.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -8,7 +9,7 @@ import java.util.Set;
 // INSERT INTO db_example.news (id, headline, description) values(1, 'EURONEWS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra.');
 @Entity
 @Table(name="news")
-public class News {
+public class News implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -11,6 +11,8 @@ public class MainApp {
     INSERT INTO db_example.news (id, headline, description) values(1, 'EURONEWS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra.');
     INSERT INTO db_example.news (id, headline, description) values(2, 'SPORTNEWS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra.');
     INSERT INTO db_example.news (id, headline, description) values(3, 'WEATHER NEWS', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed viverra.');
+
+
     INSERT INTO db_example.comments (id, text, user_id) values(1, 'Hello world', '1');
     INSERT INTO db_example.comments (id, text, user_id) values(2, 'Hello java', '2');
     INSERT INTO db_example.comments (id, text, user_id) values(3, 'It is good', '1');
