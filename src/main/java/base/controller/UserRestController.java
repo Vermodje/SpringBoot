@@ -101,39 +101,25 @@ public class UserRestController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/home/news/", method = RequestMethod.GET)
-    public ResponseEntity<List<Comment>> getAllNewsComments(){
-        List<Comment> comments = commentService.getAllComments();
-        if(comments.isEmpty()){
+    @RequestMapping(value = "/api/home/news", method = RequestMethod.GET)
+    public ResponseEntity<List<News>> getAllNews(){
+        List<News> newsList = newsService.getAllNews();
+        if(newsList.isEmpty()){
+            return new ResponseEntity<List<News>>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<List<News>>(newsList, HttpStatus.OK);
+    }
+    @RequestMapping(value = "/api/home/news", params = {"id"} ,method = RequestMethod.GET)
+    public ResponseEntity<List<Comment>> getAllCommentsForThisNews(@RequestParam ("id") Long id){
+        List<Comment> commentList = null;
+        try {
+            commentList = newsService.getNewsById(id).getComments();
+        } catch (UserException e) {
+            e.printStackTrace();
             return new ResponseEntity<List<Comment>>(HttpStatus.NO_CONTENT);
         }
-        return new ResponseEntity<List<Comment>>(comments, HttpStatus.OK);
+        return new ResponseEntity<List<Comment>>(commentList, HttpStatus.OK);
     }
 
-
-    @RequestMapping(value = "/home/news/insert", method = RequestMethod.POST)
-    public ResponseEntity<Void> addComment(@RequestBody Comment comment) throws UserException {
-        News news = newsService.getNewsById(Long.valueOf(1));
-        try {
-            commentService.add(comment);
-            List<Comment> comments = commentService.getAllComments();
-            news.setComments(comments);
-            newsService.updateNews(news);
-        } catch (UserException e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
-    }
-    /*@RequestMapping(value = "/home/news/insert", method = RequestMethod.POST)
-    public ResponseEntity<Void> createComment(@RequestBody Comment comment){
-        try {
-            commentService.add(comment);
-        } catch (UserException e) {
-            e.printStackTrace();
-            return new ResponseEntity<Void>(HttpStatus.CONFLICT);
-        }
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
-    }*/
 
 }

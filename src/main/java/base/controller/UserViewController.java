@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,17 +33,20 @@ public class UserViewController {
     }
 
     @RequestMapping(value = "/home/news", method = RequestMethod.GET)
-    public ModelAndView viewNewsPage() {
+    public String viewNewsPage() {
+        return "news";
+    }
+    @RequestMapping(value = "/home/news/{id}",method = RequestMethod.GET)
+    public ModelAndView viewCheckedNewsPage(@PathVariable Long id){
         ModelAndView mv = new ModelAndView("home");
-        News news = null;
         try {
-            news = newsService.getNewsById(Long.valueOf(1));
+            mv.addObject("headline", newsService.getNewsById(id).getHeadline());
+            mv.addObject("description", newsService.getNewsById(id).getDescription());
+            mv.addObject("newsId", newsService.getNewsById(id).getId());
+
         } catch (UserException e) {
             e.printStackTrace();
         }
-        mv.addObject("headline", news.getHeadline());
-        mv.addObject("description", news.getDescription());
-        //mv.addObject("user_id", user.getId());
         return mv;
     }
 

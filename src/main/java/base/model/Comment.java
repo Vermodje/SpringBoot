@@ -1,6 +1,8 @@
 package base.model;
 
 import javax.persistence.*;
+
+
 @Entity
 @Table(name = "comments")
 public class Comment {
@@ -11,6 +13,10 @@ public class Comment {
 
     @Column(name = "text")
     private String text;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public Comment() {
 
@@ -32,4 +38,11 @@ public class Comment {
         this.text = text;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

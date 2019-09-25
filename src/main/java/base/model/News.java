@@ -19,7 +19,10 @@ public class News {
 
     @Column(name="description")
     private String description;
-
+    // INSERT INTO db_example.news_comments (news_id, comments_id) values(1, 1);
+    // INSERT INTO db_example.news_comments (news_id, comments_id) values(1, 2);
+    // INSERT INTO db_example.news_comments (news_id, comments_id) values(2, 3);
+    // INSERT INTO db_example.news_comments (news_id, comments_id) values(3, 4);
     @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "news_comments", joinColumns = {@JoinColumn(name = "news_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "comments_id", referencedColumnName = "id")})
     private List<Comment> comments;
