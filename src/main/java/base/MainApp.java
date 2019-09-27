@@ -20,7 +20,9 @@ public class MainApp {
     INSERT INTO db_example.news_comments (news_id, comments_id) values(1, 1);
     INSERT INTO db_example.news_comments (news_id, comments_id) values(1, 2);
     INSERT INTO db_example.news_comments (news_id, comments_id) values(2, 3);
-    INSERT INTO db_example.news_comments (news_id, comments_id) values(3, 4);   */
+    INSERT INTO db_example.news_comments (news_id, comments_id) values(3, 4);
+    INSERT INTO db_example.users_comments (user_id, comments_id) values(1, 1);
+    INSERT INTO db_example.users_comments (user_id, comments_id) values(1, 3);*/
     public static void main(String[] args) {
         SpringApplication.run(MainApp.class, args);
     }

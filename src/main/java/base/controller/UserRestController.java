@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -119,6 +120,33 @@ public class UserRestController {
             return new ResponseEntity<List<Comment>>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<List<Comment>>(commentList, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/home/news", params = {"id"}, method = RequestMethod.POST)
+    public ResponseEntity<Void> addCommentForThisNews(@RequestParam ("id") Long id, @RequestBody Comment comment, Authentication authentication){
+        News currentNews = null;
+        List<Comment> newsCommentList = null;
+        User user = null;
+        List<Comment> userCommentList = null;
+
+        try {
+            currentNews = newsService.getNewsById(id);
+            newsCommentList = currentNews.getComments();
+            user = (User) authentication.getPrincipal();
+            comment.setUser(user);
+            commentService.add(comment);
+            newsCommentList.add(comment);
+            currentNews.setComments(newsCommentList);
+            newsService.updateNews(currentNews);
+            userCommentList = user.getComments();
+            userCommentList.add(comment);
+            user.setComments(userCommentList);
+            userService.updateUser(user);
+
+        } catch (UserException e) {
+            e.printStackTrace();
+        }
+        return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
 

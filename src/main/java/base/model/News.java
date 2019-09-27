@@ -68,4 +68,5 @@ public class News implements Serializable {
     public void setComments(List<Comment> comments) {
         this.comments = comments;
     }
+
 }

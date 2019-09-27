@@ -1,11 +1,13 @@
 package base.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Collection;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -23,9 +25,14 @@ public class User implements UserDetails, Serializable {
     private String login;
     @Column(name = "email", nullable = false)
     private String email;
+
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles", joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")}, inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Comment> comments;
 
     public User() {
     }
@@ -109,5 +116,12 @@ public class User implements UserDetails, Serializable {
         this.roles = roles;
     }
 
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 }
 
