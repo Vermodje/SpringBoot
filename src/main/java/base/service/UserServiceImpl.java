@@ -1,18 +1,18 @@
 package base.service;
 
-import base.repository.UserRepository;
 import base.exception.UserException;
 import base.model.User;
+import base.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
-
-    /* Using Spring DATA */
     @Autowired
     private UserRepository userRepository;
 

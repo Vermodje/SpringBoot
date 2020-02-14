@@ -17,7 +17,7 @@ public class UserRestController {
     private UserService userService;
 
     @RequestMapping(value = "/admin/", method = RequestMethod.GET)
-    public ResponseEntity<List<User>> getAllUsers()  {
+    public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(HttpStatus.NO_CONTENT);
@@ -25,7 +25,7 @@ public class UserRestController {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/admin/user", params = {"id"},method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/user", params = {"id"}, method = RequestMethod.GET)
     public ResponseEntity<User> getUser(@RequestParam("id") long id) {
         User user = null;
         try {
@@ -61,7 +61,7 @@ public class UserRestController {
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/admin/update",  params = {"id"}, method = RequestMethod.PUT)
+    @RequestMapping(value = "/admin/update", params = {"id"}, method = RequestMethod.PUT)
     public ResponseEntity<User> updateUser(@RequestParam("id") long id, @RequestBody User user) {
         User currentUser = null;
         try {

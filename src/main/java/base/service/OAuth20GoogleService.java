@@ -17,9 +17,11 @@ public interface OAuth20GoogleService {
 
     String getAuth(OAuth20Service service);
 
-    OAuth2AccessToken getToken(String code, OAuth20Service service) throws InterruptedException, ExecutionException, IOException;
+    OAuth2AccessToken getToken(String code, OAuth20Service service)
+            throws InterruptedException, ExecutionException, IOException;
 
-    Response getResponse(OAuth20Service service, OAuthRequest request, OAuth2AccessToken token) throws InterruptedException, ExecutionException, IOException;
+    Response getResponse(OAuth20Service service, OAuthRequest request, OAuth2AccessToken token)
+            throws InterruptedException, ExecutionException, IOException;
 
     Map convertJSONtoMap(String json) throws IOException;
 
