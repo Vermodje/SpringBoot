@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping(value = "/admin/")
 public class UserRestController {
 
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/admin/", method = RequestMethod.GET)
+    @GetMapping(value = "")
     public ResponseEntity<List<User>> getAllUsers() {
         List<User> users = userService.getAllUsers();
         if (users.isEmpty()) {
@@ -25,7 +26,7 @@ public class UserRestController {
         return new ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/admin/user", params = {"id"}, method = RequestMethod.GET)
+    @GetMapping(value = "user", params = {"id"})
     public ResponseEntity<User> getUser(@RequestParam("id") long id) {
         User user = null;
         try {
@@ -37,7 +38,7 @@ public class UserRestController {
         return new ResponseEntity<User>(user, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/admin/insert", method = RequestMethod.POST)
+    @PostMapping(value = "insert")
     public ResponseEntity<Void> createUser(@RequestBody User user) {
 
         try {
@@ -50,7 +51,7 @@ public class UserRestController {
 
     }
 
-    @RequestMapping(value = "/admin/delete", params = {"id"}, method = RequestMethod.DELETE)
+    @DeleteMapping(value = "delete", params = {"id"})
     public ResponseEntity<User> deleteUser(@RequestParam("id") long id) {
         try {
             userService.deleteUser(id);
@@ -61,7 +62,7 @@ public class UserRestController {
         return new ResponseEntity<User>(HttpStatus.NO_CONTENT);
     }
 
-    @RequestMapping(value = "/admin/update", params = {"id"}, method = RequestMethod.PUT)
+    @PutMapping(value = "update", params = {"id"})
     public ResponseEntity<User> updateUser(@RequestParam("id") long id, @RequestBody User user) {
         User currentUser = null;
         try {

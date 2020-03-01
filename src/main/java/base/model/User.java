@@ -1,5 +1,7 @@
 package base.model;
 
+import lombok.*;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,6 +11,9 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -33,14 +38,12 @@ public class User implements UserDetails {
             inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
     private Set<Role> roles;
 
-    public User() {
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles;
     }
 
+    @Override
     public String getPassword() {
         return password;
     }
@@ -70,48 +73,5 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public Set<Role> getRoles() {
-        return roles;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
-    }
 }
 
